@@ -30,6 +30,7 @@ public class Main_2212 {
             gap[i] = arr[i+1]-arr[i];
         }
 
+        System.out.println(Arrays.toString(gap));
         Arrays.sort(gap);
 
         for(int i=0; i<N-K; i++){
