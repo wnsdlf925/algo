@@ -5,28 +5,35 @@ public class GoldRush {
 
         int count = 0;
         int gold = 1;
-        int bronze = 10;
+        int bronze = 2000;
+        int silver = 200;
 
         while (true){
 
-            Scanner sc = new Scanner(System.in);
 
-            if(sc.nextInt()==1){
-                int random = (int)(Math.random()*1000)+1;
-                if(random<gold){
+            int i = 1;
+            if(i==1){
+                int random = (int)(Math.random()*100000)+1;
+                if(random<=gold){
                     System.out.println("gold");
                     break;
                 }else if(random<bronze+gold && random>=gold){
                     System.out.println("bronze");
-                    gold++;
-                    System.out.println("gold: "+gold+"%");
+                    gold+=1;
+
+                    //bronze=0;
+                }else if(random>bronze+gold && random<bronze+gold+silver){
+                    System.out.println("silver");
+                    gold+=10;
+                    //silver =0;
+
                 }
             }else {
                 break;
             }
 
             count++;
-            System.out.println("gold%: "+(double)gold/1000*100);
+            System.out.println("gold: "+(double)gold/100000*100+"%");
             System.out.println("count: "+count);
 
         }
