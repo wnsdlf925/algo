@@ -13,28 +13,33 @@ def solution(n,k,cmd):
     for i in range(len(cmd)):
         
         if cmd[i][0] == "D":
-            for j in range(int(cmd[i][2])):
+            a, b = cmd[i].split()
+            for j in range(int(b)):
                 index = table[index][1]
             
         elif cmd[i][0] == "U":
-            for j in range(int(cmd[i][2])):
+            a, b = cmd[i].split()
+            for j in range(int(b)):
                 index = table[index][0]
 
         elif cmd[i][0] == "C":
             stack.append(index)
-            table[index+1][0] = table[index][0]
-            table[index-1][1] = table[index][1]
-            if index == n: index = table[k][0]
-            else: index = table[k][1]
+            table[table[index][1]][0] = table[index][0]
+            table[table[index][0]][1] = table[index][1]
+            index=table[index][0] if n<table[index][1] else table[index][1]
+
+
         elif cmd[i][0] == "Z":
             temp = stack.pop()
-            table[temp+1][0] = temp
-            table[temp-1][1] = temp
-            if temp <= index: index += 1
+            table[table[temp][1]][0] = temp
+            table[table[temp][0]][1] = temp
+           
         
-        print(index)
         print(cmd[i])
+        print(index)
         print(table)
+        print(stack)
+        print()
 
         
 
@@ -47,4 +52,5 @@ def solution(n,k,cmd):
 
     return "".join(answer)
 
-print(solution(8,2,["D 2", "C", "U 3", "C", "D 4", "C", "U 2", "Z", "Z", "U 1", "C"]))
+# print(solution(8,2,["D 2", "C", "U 3", "C", "D 4", "C", "U 2", "Z", "Z", "U 1", "C"]))
+print(solution(8, 2, ["C", "C", "C", "C", "Z"]))
