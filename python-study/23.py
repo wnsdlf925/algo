@@ -1,39 +1,42 @@
-def solution(record):
+def solution(genres, plays):
 
-    dic = dict()
-    sequence = list()
-    index = 0
-    answer = list()
-    answerInStr = "님이 들어왔습니다."
-    answerOutStr = "님이 나갔습니다."
-    
-    for i in record:
-        temp = list(i.split())
-        if temp[0][0] == "E":
-            dic[temp[1]] = temp[2]
-            sequence.append([])
-            sequence[index].append(temp[1])
-            sequence[index].append("E")
-            index += 1
-        elif temp[0][0] == "L":
-            sequence.append([])
-            sequence[index].append(temp[1])
-            sequence[index].append("L")
-            index += 1
-        else: 
-            dic[temp[1]] = temp[2]
-            
+    genre = {}
+    musiclist = list()
+    answer = []
 
-    for i in sequence:
-
-        if i[1] == "E":
-            answer.append(dic[i[0]]+answerInStr)
+    for i in range(len(genres)):
+        if genres[i] in genre:
+            genre[genres[i]] += plays[i]
         else:
-            answer.append(dic[i[0]]+answerOutStr)
-    
-        
+            genre[genres[i]] = plays[i]
+
+    genre = dict(sorted(genre.items(), key=lambda x: -x[1]))
+
+    for i in range(len(genres)):
+        musiclist.append(music(i,plays[i],genres[i]))
+
+    musiclist = sorted(musiclist, key=lambda x: (-x.played, x.index))
+
+    for i in genre: 
+        count = 0
+        for j in musiclist:
+            if i == j.gen:
+                answer.append(j.index)
+                count += 1
+                if count == 2:
+                    break
 
 
     return answer
 
-print(solution(["Enter uid1234 Muzi", "Enter uid4567 Prodo","Leave uid1234","Enter uid1234 Prodo","Change uid4567 Ryan"]))
+class music:
+    def __init__(self, index, played, gen):
+        self.index = index
+        self.played = played
+        self.gen = gen
+
+    def __repr__(self) :
+        return repr((self.index,self.played))
+
+
+print(solution(["classic", "pop", "classic", "classic", "pop"],[500, 600, 150, 800, 2500]))
