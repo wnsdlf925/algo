@@ -1,47 +1,63 @@
-tree = []
-def solution(lst,search_lst):
-    global tree
-    tree = [0]*(40)
-    answer = []
 
-    for i in range(1, len(lst)+1):
-        if i == 1: tree[i] = lst[i-1]
+class node:
+
+    def __init__(self, value):
+        self.left = None
+        self.right = None
+        self.value = value
+        
+    def setLeft(self, left):
+        self.left = left
+
+    def setRight(self, right):
+        self.right = right
+
+class Tree:
+
+    def __init__(self):
+        self.root = None
+
+    def insert(self, num):
+        if self.root == None:
+            self.root = node(num)
         else:
-            index = 1
-            
-            while tree[index] != 0:
-                if tree[index] > lst[i-1]:
-                    index *= 2
-                else: index = (index*2)+1
-            tree[index] = lst[i-1]
-    print(tree)
-    for i in search_lst:
-        if find(i): answer.append(True)
-        else: answer.append(False)
+            cur = self.root
+            while True:
+                if cur.value > num:
+                    if cur.left == None:
+                        cur.left = node(num)
+                        break
+                    else:
+                        cur = cur.left
+                else:
+                    if cur.right == None:
+                        cur.right = node(num)
+                        break
+                    else:
+                        cur = cur.right
+    def find(self, num):
+        cur = self.root
+        while cur.value != num:
+            if cur.value > num:
+                cur = cur.left
+            else:
+                cur = cur.right
 
+            if not cur: return False
+        
+        return True
+        
+
+def solution(lst, search_lst):
+    answer = []
+    tree = Tree()
+    for i in lst:
+        tree.insert(i)
+
+    for i in search_lst:
+        answer.append(tree.find(i))
 
     return answer
-
-def find(num):
-    global tree
-    index = 1
-    print(num,"num")
-    while tree[index] != num:
-        print(index)
-        if tree[index] > num:
-            index *= 2
-        elif tree[index] < num:
-            index = (index*2)+1
-        elif tree[index] == 0:
-            return False
-        
-        
-        if index > len(tree):
-            return False
-        
-    return True
-    
-
 
 print(solution([5, 3, 8, 4, 2, 1, 7, 10], [1, 2, 5, 6])) # [True, True, True, False]
 print(solution([1, 3, 5, 7, 9], [2, 4, 6, 8, 10])) # [False, False, False, False, False] 
