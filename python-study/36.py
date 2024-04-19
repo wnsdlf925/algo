@@ -21,3 +21,4 @@ def solution(phone_book):
 print(solution(["119", "97674223", "1195524421"]))
 
 # 문자열 비교함수 a.startswith("example")
+# 순회 가능한 객체 인덱스와 요소 가져오는 함수 = enumerate(객체)
