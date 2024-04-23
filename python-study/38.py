@@ -11,19 +11,20 @@ def solution(graphs,start):
         visited.add(b)
 
     
+    def recursive(graph,num):
+        if num in visited:
+            answer.append(num)
+            visited.remove(num)
+        for i in graph[num]:
+            recursive(graph,i)
     
     recursive(graph,start)
     
     return answer
 
-def recursive(graph,num):
-    if num in visited:
-        answer.append(num)
-        visited.remove(num)
-    for i in graph[num]:
-        recursive(graph,i)
 
-    return
+
+
 
 
 
