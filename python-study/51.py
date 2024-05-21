@@ -1,6 +1,6 @@
 def solution(n, info):
     global answer
-    answer = [0]*11
+    answer = [list()]
     global maxNum
     maxNum = 0
     global apeachScore
@@ -19,29 +19,38 @@ def solution(n, info):
     
     def find(arrow,index):
         global stop, maxNum, temp, test
-        if temp[0]==1 and temp[1]==1 and temp[2]==1 and temp[3]==1 and temp[4]==1 and temp[5]==1 :
-                        print(temp)
+        
         if arrow == 0:
             
             nowScore = score(temp)
 
-            if nowScore > 0 and nowScore >= maxNum:
-                maxNum = nowScore
-                for i, value in enumerate(temp):
-                    answer[i] = value
-                
-                return
+            if nowScore > 0:
+                    if nowScore > maxNum:
+                        maxNum = nowScore
+                        answer.clear()
+                        answerArr = [0]*11
+                        for i, value in enumerate(temp):
+                            answerArr[i] = value
+                        answer.append(answerArr)
+                        return
+                    elif nowScore == maxNum:
+                        
+                        answerArr = [0]*11
+                        for i, value in enumerate(temp):
+                            answerArr[i] = value
+                        answer.append(answerArr)
+                        return
             else: return
         
         
         for i in range(index,11):
+         
             if info[i] >= temp[i]:
-                if arrow-info[i]+1 >= 0:
-                    
-                    temp[i] = info[i]+1
-                    find(arrow-temp[i],i+1)
-                    temp[i] = 0 
-                else: find(arrow,i+1)
+                temp[i] += 1
+                find(arrow-1,i)
+                temp[i] -= 1 
+            else: find(arrow,i+1)
+            
 
         return
     
@@ -57,9 +66,11 @@ def solution(n, info):
         return lion - apearch
     
     find(n,0)
-    for i in answer:
+    answer = sorted(answer,  key=lambda x: x[::-1], reverse=True)
+    
+    for i in answer[0]:
         if i != 0:
-            return answer
+            return answer[0]
     return [-1]
 
 
