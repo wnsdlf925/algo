@@ -11,12 +11,14 @@ def solution(n,weak,dist):
         for friends in permutations(dist, len(dist)):
             cnt = 1
             position = weak[i] + friends[cnt -1]
+            print(friends)
             for j in range(i, i+length):
                 if position < weak[j]:
                     cnt+=1
                     if cnt>len(dist):
                         break
                     position = weak[j] + friends[cnt -1]
+                
             answer = min(answer,cnt)
 
     return answer
