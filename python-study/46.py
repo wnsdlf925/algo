@@ -5,17 +5,12 @@ def solution(n, wires):
     answer = float("inf")
     graph = dict()
     visited = set()
-
     
     for i in range(1,n+1):
         graph[i] = []
-
     for a,b in wires:
-        
         graph[a].append(b)
         graph[b].append(a)
-
-
     for a,b in wires:
         graph[a].remove(b)
         graph[b].remove(a)
@@ -26,8 +21,6 @@ def solution(n, wires):
         visited.clear()
         graph[a].append(b)
         graph[b].append(a)
-
-
     return answer
 
 def dfs(num):
