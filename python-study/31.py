@@ -21,16 +21,16 @@ def solution(info, edges):
         now_node, sheep_count, wolf_count, visited_set = que.popleft()
         visited_set.update(graph[now_node])
         
+        print(now_node,visited_set)
         max_sheep = max(max_sheep,sheep_count)
-
         for i in visited_set:
             if info[i] == 1:
                 if sheep_count > wolf_count+1:
                     que.append((i,sheep_count,wolf_count+1,visited_set - {i}))
-                
+                    print(que)
             else:
                 que.append((i,sheep_count+1,wolf_count,visited_set - {i}))
-    
+                print(que)
 
 
     return max_sheep
